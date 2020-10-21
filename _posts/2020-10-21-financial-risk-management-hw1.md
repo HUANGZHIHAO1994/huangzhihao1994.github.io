@@ -22,7 +22,7 @@ https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_
 
 Chrome浏览器扩展程序：[GitHub with MathJax](https://www.crx4chrome.com/crx/119782/) ，打开网址后选择 Available in the [Chrome Web Store >](https://chrome.google.com/webstore/detail/ioemnmodlmafdkllaclgeombjnmnbima?utm_source=www.crx4chrome.com)
 
-github.io好像还是不兼容，到这里看：https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw1
+github.io好像还是不兼容，到这里看：[https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw1](https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw1)
 
 - fork之后下载到本地看
 
@@ -152,7 +152,7 @@ ubuntu环境下，第三小题使用graphviz需要安装：
 sudo apt-get install graphviz
 ```
 
-ubuntu 解决matplotlib中文问题参考：https://www.huuinn.com/archives/533
+ubuntu 解决matplotlib中文问题参考：[https://www.huuinn.com/archives/533](https://www.huuinn.com/archives/533)https://www.huuinn.com/archives/533
 
 
 
