@@ -13,7 +13,7 @@ toc: false
     <img src='https://ftp.bmp.ovh/imgs/2020/08/b77a8439ea51e080.jpg' height="50" width="50" >
 </div>
 
-https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw1
+[https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw1](https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw1)
 
 
 # 公式显示问题
