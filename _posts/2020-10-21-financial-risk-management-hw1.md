@@ -8,6 +8,8 @@ toc: false
 ---
 
 
+
+
 <div align="left">
     <img src='https://ftp.bmp.ovh/imgs/2020/08/b77a8439ea51e080.jpg' height="50" width="50" >
 </div>
@@ -194,22 +196,25 @@ def ex_vector_compute(x_matrix):
 计算公式如<span id="jump2">公式(2)</span>所示。其中，协方差矩阵采用无偏估计，n代表：每六个月的天数-1，50代表50支股票，具体可见 `ex_matrix_compute` 和 `cov_matrix_compute` 方法
 
 
+
 $$
+\left\{
 \begin{align}
 	\Sigma  
 	& = E((X-EX)^T(X-EX)) \\
 	& = \frac{1}{n-1}((X-EX)^T(X-EX)) \tag{2}
 \end{align}
+\right\}
 $$
 
+
 $$
-(X-EX)_{n\times50}=\begin{pmatrix}
-        x_{1,1}-Ex_{1} & x_{2,1}-Ex_{2} & \cdots & x_{50,1}-Ex_{50}\\
-        x_{1,2}-Ex_{1} & x_{2,2}-Ex_{2} & \cdots & x_{50,2}-Ex_{50}\\
-        \vdots & \vdots & \ddots & \vdots\\
-        x_{1,n}-Ex_{1} & x_{2,n}-Ex_{2} & \cdots & x_{50,n}-Ex_{50}\\
-    \end{pmatrix}
+(X-EX)_{n\times50}=\left(\begin{matrix} x_{1,1}-Ex_{1} & x_{2,1}-Ex_{2} & \cdots & x_{50,1}-Ex_{50}\\\
+        x_{1,2}-Ex_{1} & x_{2,2}-Ex_{2} & \cdots & x_{50,2}-Ex_{50} \\\
+        \vdots & \vdots & \ddots & \vdots \\\
+        x_{1,n}-Ex_{1} & x_{2,n}-Ex_{2} & \cdots & x_{50,n}-Ex_{50} \end{matrix}\right)
 $$
+
 
 
 
@@ -253,12 +258,14 @@ def save_weights_markowitz(self):
 
 由于Markowitz投资组合理论没有用到无风险利率，因此这种方法并不会用到3%的无风险利率，而   $r_{target}$ 是题中给出的10%期望目标收益，该方法求解如下二次规划问题（题中可以shorting，w可以为负），相关向量和矩阵符号与公式[(1)](#jump)、[(2)](#jump2)一致。可通过 **cvxpy** 或 **cvxopt** 两个包实现求解，具体可见 `compute_weight` 方法：
 $$
+\left\{
 \begin{alignat*}{2}
 \min_{\vec{w}} \quad & \frac{1}{2}\vec{w}^T \Sigma \vec{w} \\
 \mbox{s.t.}\quad
 &\vec{w}^T\vec{r} = r_{target} \\
 &\vec{1}^T\vec{w} = 1 
 \end{alignat*}
+\right\}
 $$
 
 
@@ -308,6 +315,7 @@ def compute_weight(self, x_matrix, total_days=252, method="Markowitz", starttime
 
 需要注意的是这里的  $r_{f_{day}}$ 不再是3%，因为 $\bar{r_{p}}，\sigma_{p}$ 都是日度单位，此处采用 平均每年天数=5年交易日总天数/5，无风险日利率=3%/平均每年天数。获取最优市场组合权重之后，通过结合无风险日利率制作资本市场线，
 $$
+\left\{
 \begin{alignat*}{2}
 \max_{\vec{w}}\quad & Sharpe\ ratio =tan \theta = \frac{\bar{r_{p}}-r_{f_{day}}}{\sigma_{p}} \\
 \mbox{s.t.}\quad
@@ -317,6 +325,7 @@ $$
 &\sigma_{p}=\sqrt{\vec{w}^T \Sigma \vec{w}}
 
 \end{alignat*}
+\right\}
 $$
 相关资本市场线和有效前沿（仅以第一期20100104_20141231为例，更多结果请见**images**文件夹）：
 
@@ -416,12 +425,12 @@ $$
 $$
 可以看出，计算 $\beta$ 的要素全在协方差矩阵之中，将HS300加入数据框之后，再利用第一题的协方差矩阵计算方法，直接可求得5只股票同市场组合的协方差阵：
 $$
-\Sigma_{5,M}=\begin{pmatrix}
+\Sigma_{5,M}=\left(\begin{matrix}
         \sigma_{1}^2 & \sigma_{1,2} & \cdots & \sigma_{1,M}\\
         \sigma_{2,1} & \sigma_{2}^2 & \cdots & \sigma_{2,M}\\
         \vdots & \vdots & \ddots & \vdots\\
         \sigma_{M,1} & \sigma_{M,2} & \cdots & \sigma_{M}^2\\
-    \end{pmatrix}
+    \end{matrix}\right)
 $$
 通过上式很容易发现要求得 $\beta_i$ ，所有数据都在协方差阵的最后一行（列）
 
@@ -541,41 +550,84 @@ m_steps:二叉树的步长。
 
 $$
 \Delta t=t/m\_steps \\
+$$
+
+$$
 u=e^{\sigma\sqrt {\Delta t}},\ d=1/u \\
+$$
+
+$$
 P=\frac{e^{r\Delta t}-d}{u-d}
 $$
+
+
 
 2. 再通过下式计算最后一期二叉树标的资产价格：
 
 $$
 S_{d^m}=S * d^{m\_steps} \\
+$$
+
+$$
 S_{d^{m-1}u}=S_{d^m} * u^2 \\
-S_{d^{m-2}u^2}=S_{d^{m-1}u} * u^2 \\
+$$
+
+$$
+S_{d^{m-2}u^2}=S_{d^{m-1}u} * u^2\\
+$$
+
+$$
 \cdots
 $$
+
+
 
 3. 通过与执行价格K比较计算最后一期期权价值：（例如看涨期权）
 
 $$
 f_{d^m}=max(S_{d^m}-K,0) \\
+$$
+
+$$
 f_{d^{m-1}u}=max(S_{d^{m-1}u}-K,0) \\
+$$
+
+$$
 \cdots
 $$
+
+
 
 4. 最终通过下式一步步往前推的第一期
 
 $$
 f_{d^{m-1}}=e^{-r\Delta t}((1-P)f_{d^m}+Pf_{d^{m-1}u}) \\
+$$
+
+$$
 \cdots
 $$
+
+
 
 **美式看跌期权在上一步增加一个比较环节：**
 $$
 \hat{f_{d^{m-1}}}=e^{-r\Delta t}((1-P)f_{d^m}+Pf_{d^{m-1}u}) \\
+$$
+
+$$
 S_{d^{m-1}}=S_{d^{m-1}u} * d \\
+$$
+
+$$
 f_{d^{m-1}}=max(\hat{f_{d^{m-1}}},S_{d^{m-1}}-K) \\
+$$
+
+$$
 \cdots
 $$
+
+
 
 ### 2.2 计算结果
 
@@ -607,17 +659,27 @@ $$
 
 $$
 CALL=SN(d_1)-Ke^{-rt}N(d_2) \\
-PUT=Ke^{-rt}N(-d_2)-SN(-d_1) 
+$$
+
+$$
+PUT=Ke^{-rt}N(-d_2)-SN(-d_1)\\
 $$
 
 其中，
 
-
 $$
 d_1=\frac{ln(S/K)+(r+\sigma^2/2)t}{\sigma t} \\
+$$
+
+$$
 d_2=d_1-\sigma t=\frac{ln(S/K)+(r-\sigma^2/2)t}{\sigma t}\\
+$$
+
+$$
 N(d)=\frac{1}{\sqrt {2\pi}}\int_{\infty}^de^{-\frac{1}{2}x^2}{\rm d}x
 $$
+
+
 
 ### 3.2 结果
 
