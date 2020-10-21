@@ -13,12 +13,16 @@ toc: false
     <img src='https://ftp.bmp.ovh/imgs/2020/08/b77a8439ea51e080.jpg' height="50" width="50" >
 </div>
 
+https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw1
+
 
 # 公式显示问题
 
 - 在github上看本页公式
 
 Chrome浏览器扩展程序：[GitHub with MathJax](https://www.crx4chrome.com/crx/119782/) ，打开网址后选择 Available in the [Chrome Web Store >](https://chrome.google.com/webstore/detail/ioemnmodlmafdkllaclgeombjnmnbima?utm_source=www.crx4chrome.com)
+
+github.io好像还是不兼容，到这里看：https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw1
 
 - fork之后下载到本地看
 
