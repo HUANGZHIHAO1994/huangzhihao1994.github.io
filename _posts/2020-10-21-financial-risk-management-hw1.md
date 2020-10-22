@@ -225,7 +225,7 @@ def cov_matrix_compute(x_ex_matrix):
 
 ## 5. 计算权重：
 
-计算权重有三种方法，相关权重全部都以 *<u>txt</u>* 和 *<u>pickle</u>* 两种格式保存在了 **weights** 文件夹中，以下展示Markowitz方法的第一期权重值：
+计算权重有三种方法，相关权重全部都以 <u>txt</u> 和 <u>pickle</u> 两种格式保存在了 **weights** 文件夹中，以下展示Markowitz方法的第一期权重值：
 
 ```python
 [-2.02568126e-02, -1.38108078e-02,  5.55970704e-03, -3.58866925e-02,
