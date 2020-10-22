@@ -15,9 +15,7 @@ toc: false
 
 [https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw1](https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw1)
 
-<span class="math display">\[
-p(\vec{w}_{m}, \vec{z}_{m}, \vec{\vartheta}_{m}, \underline{\Phi} | \vec{\alpha}, \vec{\beta})=\overbrace{\underbrace{\prod_{n=1}^{N_{m}} p(w_{m, n} | \vec{\varphi}_{z_{m,n}}) p(z_{m, n} |\vec{\vartheta}_{m}) }_{\text{word plate}}\cdot p(\vec{\vartheta}_{m} | \vec{\alpha})}^{\text{document plate (1 document)}} \cdot \underbrace{p(\underline{\Phi} | \vec{\beta})}_{\text {topic plate }}  \tag{56}
-\]</span>
+
 
 
 
@@ -26,10 +24,6 @@ p(\vec{w}_{m}, \vec{z}_{m}, \vec{\vartheta}_{m}, \underline{\Phi} | \vec{\alpha}
 - 在github上看本页公式
 
 Chrome浏览器扩展程序：[GitHub with MathJax](https://www.crx4chrome.com/crx/119782/) ，打开网址后选择 Available in the [Chrome Web Store >](https://chrome.google.com/webstore/detail/ioemnmodlmafdkllaclgeombjnmnbima?utm_source=www.crx4chrome.com)
-
-- fork之后下载到本地看
-
-**README.md**  由于公式对齐，矩阵显示等问题，做了HTML兼容，本地查看不了相关公式，可通过项目文件中 **Report_complete.md** 查看
 
 
 
@@ -193,16 +187,12 @@ def get_six_month_map(x_matrix):
 
 ## 3. 计算日收益率及日平均收益（用于估计每只股票日期望收益）：
 
-计算公式如<span id="jump">公式(1)</span>所示。其中，n代表：每六个月的天数-1，向量 $\vec{r_{t}}$ 是50维的，每一维度代表一只股票t日收益率
-$$
-\vec{r_{t}}=\frac{\vec{P_{t}}-\vec{P_{t-1}}}{\vec{P_{t-1}}}\\
-$$
+计算公式如<span id="jump">公式(1)</span>所示。其中，n代表：每六个月的天数-1，向量 \\(\vec{r_{t}}\\) 是50维的，每一维度代表一只股票t日收益率
+$$ \vec{r_{t}}=\frac{\vec{P_{t}}-\vec{P_{t-1}}}{\vec{P_{t-1}}}\\ $$
 
-$$
-\vec{r}=\frac{1}{n}\sum_{t=1}^{n}\vec{r_{t}} \tag{1}\\
-$$
+$$ \vec{r}=\frac{1}{n}\sum_{t=1}^{n}\vec{r_{t}} \tag{1}\\ $$
 
-注：也可使用 $r_{t}=log(\frac{P_{t}}{P_{t-1}})$ ，两者在 $r_{t}$ 十分小的是等价无穷小，本次作业使用的是前者，具体可见 `day_yield_compute` 和 `ex_vector_compute` 方法
+注：也可使用 \\(r_{t}=log(\frac{P_{t}}{P_{t-1}})\\) ，两者在 \\(r_{t}\\) 十分小的是等价无穷小，本次作业使用的是前者，具体可见 `day_yield_compute` 和 `ex_vector_compute` 方法
 
 ```python
 def day_yield_compute(x_matrix):
@@ -217,26 +207,15 @@ def ex_vector_compute(x_matrix):
 
 
 
-<div>
-$$
-\begin{align*}
-	\Sigma  
-	& = E((X-EX)^T(X-EX)) \\
-	& = \frac{1}{n-1}((X-EX)^T(X-EX)) \tag{2} \\
-\end{align*}
-$$
-</div>
+
+$$ \begin{align*} \Sigma   & = E((X-EX)^T(X-EX)) \\ & = \frac{1}{n-1}((X-EX)^T(X-EX)) \tag{2} \\ \end{align*} $$
 
 
 
-<div>
-$$
-(X-EX)_{n\times50}=\left(\begin{matrix} x_{1,1}-Ex_{1} & x_{2,1}-Ex_{2} & \cdots & x_{50,1}-Ex_{50}\\\
-        x_{1,2}-Ex_{1} & x_{2,2}-Ex_{2} & \cdots & x_{50,2}-Ex_{50} \\\
-        \vdots & \vdots & \ddots & \vdots \\\
-        x_{1,n}-Ex_{1} & x_{2,n}-Ex_{2} & \cdots & x_{50,n}-Ex_{50} \end{matrix}\right)
-$$
-</div>
+
+
+$$ (X-EX)_{n\times50}=\left(\begin{matrix} x_{1,1}-Ex_{1} & x_{2,1}-Ex_{2} & \cdots & x_{50,1}-Ex_{50}\\\ x_{1,2}-Ex_{1} & x_{2,2}-Ex_{2} & \cdots & x_{50,2}-Ex_{50} \\\ \vdots & \vdots & \ddots & \vdots \\\ x_{1,n}-Ex_{1} & x_{2,n}-Ex_{2} & \cdots & x_{50,n}-Ex_{50} \end{matrix}\right) $$
+
 
 
 
