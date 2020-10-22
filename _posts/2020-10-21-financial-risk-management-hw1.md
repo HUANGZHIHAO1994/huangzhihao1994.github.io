@@ -555,43 +555,80 @@ m_steps:二叉树的步长。
 1. 计算u，d，P：
 
 $$
-\Delta t=t/m\_steps \\
-u=e^{\sigma\sqrt {\Delta t}},\ d=1/u \\
+\Delta t=t/m\_steps 
+$$
+
+$$
+u=e^{\sigma\sqrt {\Delta t}},\ d=1/u 
+$$
+
+$$
 P=\frac{e^{r\Delta t}-d}{u-d}
 $$
 
 2. 再通过下式计算最后一期二叉树标的资产价格：
 
 $$
-S_{d^m}=S * d^{m\_steps} \\
-S_{d^{m-1}u}=S_{d^m} * u^2 \\
-S_{d^{m-2}u^2}=S_{d^{m-1}u} * u^2 \\
+S_{d^m}=S * d^{m\_steps} 
+$$
+
+$$
+S_{d^{m-1}u}=S_{d^m} * u^2 
+$$
+
+$$
+S_{d^{m-2}u^2}=S_{d^{m-1}u} * u^2 
+$$
+
+$$
 \cdots
 $$
 
 3. 通过与执行价格K比较计算最后一期期权价值：（例如看涨期权）
 
 $$
-f_{d^m}=max(S_{d^m}-K,0) \\
-f_{d^{m-1}u}=max(S_{d^{m-1}u}-K,0) \\
+f_{d^m}=max(S_{d^m}-K,0)
+$$
+
+$$
+f_{d^{m-1}u}=max(S_{d^{m-1}u}-K,0)
+$$
+
+$$
 \cdots
 $$
+
 
 4. 最终通过下式一步步往前推的第一期
 
 $$
-f_{d^{m-1}}=e^{-r\Delta t}((1-P)f_{d^m}+Pf_{d^{m-1}u}) \\
+f_{d^{m-1}}=e^{-r\Delta t}((1-P)f_{d^m}+Pf_{d^{m-1}u}) 
+$$
+
+$$
 \cdots
 $$
 
 **美式看跌期权在上一步增加一个比较环节：**
 
 $$
-\hat{f_{d^{m-1}}}=e^{-r\Delta t}((1-P)f_{d^m}+Pf_{d^{m-1}u}) \\
-S_{d^{m-1}}=S_{d^{m-1}u} * d \\
-f_{d^{m-1}}=max(\hat{f_{d^{m-1}}},S_{d^{m-1}}-K) \\
+\hat{f_{d^{m-1}}}=e^{-r\Delta t}((1-P)f_{d^m}+Pf_{d^{m-1}u}) 
+$$
+
+$$
+S_{d^{m-1}}=S_{d^{m-1}u} * d 
+$$
+
+$$
+f_{d^{m-1}}=max(\hat{f_{d^{m-1}}},S_{d^{m-1}}-K) 
+$$
+
+$$
 \cdots
 $$
+
+
+
 
 ### 2.2 计算结果
 
@@ -622,7 +659,10 @@ $$
 ### 3.1 公式
 
 $$
-CALL=SN(d_1)-Ke^{-rt}N(d_2) \\
+CALL=SN(d_1)-Ke^{-rt}N(d_2)
+$$
+
+$$
 PUT=Ke^{-rt}N(-d_2)-SN(-d_1) 
 $$
 
@@ -630,10 +670,19 @@ $$
 
 
 $$
-d_1=\frac{ln(S/K)+(r+\sigma^2/2)t}{\sigma t} \\
-d_2=d_1-\sigma t=\frac{ln(S/K)+(r-\sigma^2/2)t}{\sigma t}\\
+d_1=\frac{ln(S/K)+(r+\sigma^2/2)t}{\sigma t}
+$$
+
+$$
+d_2=d_1-\sigma t=\frac{ln(S/K)+(r-\sigma^2/2)t}{\sigma t}
+$$
+
+$$
 N(d)=\frac{1}{\sqrt {2\pi}}\int_{\infty}^de^{-\frac{1}{2}x^2}{\rm d}x
 $$
+
+
+
 
 ### 3.2 结果
 
