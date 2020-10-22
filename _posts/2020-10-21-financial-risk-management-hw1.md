@@ -15,6 +15,10 @@ toc: false
 
 [https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw1](https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw1)
 
+<span class="math display">\[
+p(\vec{w}_{m}, \vec{z}_{m}, \vec{\vartheta}_{m}, \underline{\Phi} | \vec{\alpha}, \vec{\beta})=\overbrace{\underbrace{\prod_{n=1}^{N_{m}} p(w_{m, n} | \vec{\varphi}_{z_{m,n}}) p(z_{m, n} |\vec{\vartheta}_{m}) }_{\text{word plate}}\cdot p(\vec{\vartheta}_{m} | \vec{\alpha})}^{\text{document plate (1 document)}} \cdot \underbrace{p(\underline{\Phi} | \vec{\beta})}_{\text {topic plate }}  \tag{56}
+\]</span>
+
 
 
 # 公式显示问题
