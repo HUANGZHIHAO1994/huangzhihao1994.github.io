@@ -4,29 +4,15 @@ author: Zhihao HUANG
 date: 2020-10-21 16:34:00 +0800
 categories: [Blogging, Finance]
 tags: [Investment, Monto Carlo, Option Pricing]
+math: true
 toc: false
 ---
-
-
 
 <div align="left">
     <img src='https://ftp.bmp.ovh/imgs/2020/08/b77a8439ea51e080.jpg' height="50" width="50" >
 </div>
 
-[https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw1](https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw1)
-
-
-
-
-
-# 公式显示问题
-
-- 在github上看本页公式
-
-Chrome浏览器扩展程序：[GitHub with MathJax](https://www.crx4chrome.com/crx/119782/) ，打开网址后选择 Available in the [Chrome Web Store >](https://chrome.google.com/webstore/detail/ioemnmodlmafdkllaclgeombjnmnbima?utm_source=www.crx4chrome.com)
-
-
-
+[相关代码和结果](https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw1)
 
 
 # 一、涉及内容
@@ -187,12 +173,16 @@ def get_six_month_map(x_matrix):
 
 ## 3. 计算日收益率及日平均收益（用于估计每只股票日期望收益）：
 
-计算公式如<span id="jump">公式(1)</span>所示。其中，n代表：每六个月的天数-1，向量 \\(\vec{r_{t}}\\) 是50维的，每一维度代表一只股票t日收益率
-$$ \vec{r_{t}}=\frac{\vec{P_{t}}-\vec{P_{t-1}}}{\vec{P_{t-1}}}\\ $$
+计算公式如<span id="jump">公式(1)</span>所示。其中，n代表：每六个月的天数-1，向量 $\vec{r_{t}}$ 是50维的，每一维度代表一只股票t日收益率
+$$
+\vec{r_{t}}=\frac{\vec{P_{t}}-\vec{P_{t-1}}}{\vec{P_{t-1}}}\\
+$$
 
-$$ \vec{r}=\frac{1}{n}\sum_{t=1}^{n}\vec{r_{t}} \tag{1}\\ $$
+$$
+\vec{r}=\frac{1}{n}\sum_{t=1}^{n}\vec{r_{t}} \tag{1}\\
+$$
 
-注：也可使用 \\(r_{t}=log(\frac{P_{t}}{P_{t-1}})\\) ，两者在 \\(r_{t}\\) 十分小的是等价无穷小，本次作业使用的是前者，具体可见 `day_yield_compute` 和 `ex_vector_compute` 方法
+注：也可使用 $r_{t}=log(\frac{P_{t}}{P_{t-1}})$ ，两者在 $r_{t}$ 十分小的是等价无穷小，本次作业使用的是前者，具体可见 `day_yield_compute` 和 `ex_vector_compute` 方法
 
 ```python
 def day_yield_compute(x_matrix):
@@ -203,20 +193,25 @@ def ex_vector_compute(x_matrix):
 
 ## 4. 协方差矩阵计算：
 
-计算公式如<span id="jump2">公式(2)</span>所示。其中，协方差矩阵采用无偏估计，n代表：每六个月的天数-1，50代表50支股票，具体可见 `ex_matrix_compute` 和 `cov_matrix_compute` 方法
+计算式子如<span id="jump2">公式(2)</span>所示。其中，协方差矩阵采用无偏估计，n代表：每六个月的天数-1，50代表50支股票，具体可见 `ex_matrix_compute` 和 `cov_matrix_compute` 方法
 
 
+$$
+\begin{align}
+	\Sigma  
+	& = E((X-EX)^T(X-EX)) \\
+	& = \frac{1}{n-1}((X-EX)^T(X-EX)) \tag{2}
+\end{align}
+$$
 
-
-$$ \begin{align*} \Sigma   & = E((X-EX)^T(X-EX)) \\ & = \frac{1}{n-1}((X-EX)^T(X-EX)) \tag{2} \\ \end{align*} $$
-
-
-
-
-
-$$ (X-EX)_{n\times50}=\left(\begin{matrix} x_{1,1}-Ex_{1} & x_{2,1}-Ex_{2} & \cdots & x_{50,1}-Ex_{50}\\\ x_{1,2}-Ex_{1} & x_{2,2}-Ex_{2} & \cdots & x_{50,2}-Ex_{50} \\\ \vdots & \vdots & \ddots & \vdots \\\ x_{1,n}-Ex_{1} & x_{2,n}-Ex_{2} & \cdots & x_{50,n}-Ex_{50} \end{matrix}\right) $$
-
-
+$$
+(X-EX)_{n\times50}=\begin{pmatrix}
+        x_{1,1}-Ex_{1} & x_{2,1}-Ex_{2} & \cdots & x_{50,1}-Ex_{50}\\
+        x_{1,2}-Ex_{1} & x_{2,2}-Ex_{2} & \cdots & x_{50,2}-Ex_{50}\\
+        \vdots & \vdots & \ddots & \vdots\\
+        x_{1,n}-Ex_{1} & x_{2,n}-Ex_{2} & \cdots & x_{50,n}-Ex_{50}\\
+    \end{pmatrix}
+$$
 
 
 
@@ -229,7 +224,7 @@ def cov_matrix_compute(x_ex_matrix):
 
 ## 5. 计算权重：
 
-计算权重有三种方法，相关权重全部都以 *<u>txt</u>* 和 <u>*pickle*</u> 两种格式保存在了**weights**文件夹中，以下展示Markowitz方法的第一期权重值：
+计算权重有三种方法，相关权重全部都以 *<u>txt</u>* 和 <u>*pickle*</u> 两种格式保存在了 **weights** 文件夹中，以下展示Markowitz方法的第一期权重值：
 
 ```python
 [-2.02568126e-02, -1.38108078e-02,  5.55970704e-03, -3.58866925e-02,
@@ -259,8 +254,6 @@ def save_weights_markowitz(self):
 ### 5.1 Markowitz投资组合方法
 
 由于Markowitz投资组合理论没有用到无风险利率，因此这种方法并不会用到3%的无风险利率，而   $r_{target}$ 是题中给出的10%期望目标收益，该方法求解如下二次规划问题（题中可以shorting，w可以为负），相关向量和矩阵符号与公式[(1)](#jump)、[(2)](#jump2)一致。可通过 **cvxpy** 或 **cvxopt** 两个包实现求解，具体可见 `compute_weight` 方法：
-
-<div>
 $$
 \begin{alignat*}{2}
 \min_{\vec{w}} \quad & \frac{1}{2}\vec{w}^T \Sigma \vec{w} \\
@@ -269,9 +262,6 @@ $$
 &\vec{1}^T\vec{w} = 1 
 \end{alignat*}
 $$
-</div>
-
-
 
 
 ```python
@@ -318,25 +308,18 @@ def compute_weight(self, x_matrix, total_days=252, method="Markowitz", starttime
 
 这个方法通过求解下式最优化问题获取权重，由于分母有w的二次项，目前只能通过蒙特卡洛数值方法逼近最优解。具体抽样方法为：从 $N(1/50,1)$ 中随机抽取49个权重，最后一个权重通过1减去前49个之和得到。
 
-需要注意的是这里的  $r_{f_{day}}$ 不再是3%，因为 $\bar{r_{p}}，\sigma_{p}$ 都是日度单位，此处采用 平均每年天数=5年交易日总天数/5，无风险日利率=3%/平均每年天数。获取最优市场组合权重之后，通过结合无风险日利率制作资本市场线
-
-
-
-<div>
+需要注意的是这里的  $r_{f_{day}}$ 不再是3%，因为 $\bar{r_{p}}，\sigma_{p}$ 都是日度单位，此处采用 平均每年天数=5年交易日总天数/5，无风险日利率=3%/平均每年天数。获取最优市场组合权重之后，通过结合无风险日利率制作资本市场线，
 $$
 \begin{alignat*}{2}
 \max_{\vec{w}}\quad & Sharpe\ ratio =tan \theta = \frac{\bar{r_{p}}-r_{f_{day}}}{\sigma_{p}} \\
-\mbox{s.t.}\quad & \vec{1}^T\vec{w} = 1 \\
+\mbox{s.t.}\quad
+
+&\vec{1}^T\vec{w} = 1 \\
 &\bar{r_{p}}=\vec{w}^{T}\vec{r} \\
 &\sigma_{p}=\sqrt{\vec{w}^T \Sigma \vec{w}}
+
 \end{alignat*}
 $$
-</div>
-
-
-
-
-
 相关资本市场线和有效前沿（仅以第一期20100104_20141231为例，更多结果请见**images**文件夹）：
 
 ![Montacarlo_CAL_50000_20100104_20141231](https://ftp.bmp.ovh/imgs/2020/10/5ce2f97faabb3d6f.png)
@@ -434,20 +417,14 @@ $$
 \beta_i=\frac{\sigma_{i,M}}{\sigma_{M}^2}
 $$
 可以看出，计算 $\beta$ 的要素全在协方差矩阵之中，将HS300加入数据框之后，再利用第一题的协方差矩阵计算方法，直接可求得5只股票同市场组合的协方差阵：
-
-<div>
 $$
-\Sigma_{5,M}=\left(\begin{matrix}
+\Sigma_{5,M}=\begin{pmatrix}
         \sigma_{1}^2 & \sigma_{1,2} & \cdots & \sigma_{1,M}\\
         \sigma_{2,1} & \sigma_{2}^2 & \cdots & \sigma_{2,M}\\
         \vdots & \vdots & \ddots & \vdots\\
         \sigma_{M,1} & \sigma_{M,2} & \cdots & \sigma_{M}^2\\
-    \end{matrix}\right)
+    \end{pmatrix}
 $$
-</div>
-
-
-
 通过上式很容易发现要求得 $\beta_i$ ，所有数据都在协方差阵的最后一行（列）
 
 求得这五只股票beta为 
@@ -566,84 +543,41 @@ m_steps:二叉树的步长。
 
 $$
 \Delta t=t/m\_steps \\
-$$
-
-$$
 u=e^{\sigma\sqrt {\Delta t}},\ d=1/u \\
-$$
-
-$$
 P=\frac{e^{r\Delta t}-d}{u-d}
 $$
-
-
 
 2. 再通过下式计算最后一期二叉树标的资产价格：
 
 $$
 S_{d^m}=S * d^{m\_steps} \\
-$$
-
-$$
 S_{d^{m-1}u}=S_{d^m} * u^2 \\
-$$
-
-$$
-S_{d^{m-2}u^2}=S_{d^{m-1}u} * u^2\\
-$$
-
-$$
+S_{d^{m-2}u^2}=S_{d^{m-1}u} * u^2 \\
 \cdots
 $$
-
-
 
 3. 通过与执行价格K比较计算最后一期期权价值：（例如看涨期权）
 
 $$
 f_{d^m}=max(S_{d^m}-K,0) \\
-$$
-
-$$
 f_{d^{m-1}u}=max(S_{d^{m-1}u}-K,0) \\
-$$
-
-$$
 \cdots
 $$
-
-
 
 4. 最终通过下式一步步往前推的第一期
 
 $$
 f_{d^{m-1}}=e^{-r\Delta t}((1-P)f_{d^m}+Pf_{d^{m-1}u}) \\
-$$
-
-$$
 \cdots
 $$
-
-
 
 **美式看跌期权在上一步增加一个比较环节：**
 $$
 \hat{f_{d^{m-1}}}=e^{-r\Delta t}((1-P)f_{d^m}+Pf_{d^{m-1}u}) \\
-$$
-
-$$
 S_{d^{m-1}}=S_{d^{m-1}u} * d \\
-$$
-
-$$
 f_{d^{m-1}}=max(\hat{f_{d^{m-1}}},S_{d^{m-1}}-K) \\
-$$
-
-$$
 \cdots
 $$
-
-
 
 ### 2.2 计算结果
 
@@ -675,27 +609,17 @@ $$
 
 $$
 CALL=SN(d_1)-Ke^{-rt}N(d_2) \\
-$$
-
-$$
-PUT=Ke^{-rt}N(-d_2)-SN(-d_1)\\
+PUT=Ke^{-rt}N(-d_2)-SN(-d_1) 
 $$
 
 其中，
 
+
 $$
 d_1=\frac{ln(S/K)+(r+\sigma^2/2)t}{\sigma t} \\
-$$
-
-$$
 d_2=d_1-\sigma t=\frac{ln(S/K)+(r-\sigma^2/2)t}{\sigma t}\\
-$$
-
-$$
 N(d)=\frac{1}{\sqrt {2\pi}}\int_{\infty}^de^{-\frac{1}{2}x^2}{\rm d}x
 $$
-
-
 
 ### 3.2 结果
 
@@ -705,94 +629,5 @@ $$
 
 
 
-# 六、To Do List
 
-**possible will do** （中文翻译：基本没空做）
-
-在公式 [(1)](#jump) 的地方，从金融理论上来说，公司发放现金股利时是需要调整股价的，股权登记日收盘价如果市场有效的话应该调整为减去分红后的价格，因为当天买入的是享有分红，之后买入不享有，自然当天的股价包含了买入分红的那部分价格，通常会在第二天开盘跌一点。
-$$
-\vec{r_{t}}=\frac{\vec{P_{t}}-\vec{P_{t-1}}+\vec{I_{t}}}{\vec{P_{t-1}}}\\
-$$
-比如：股权登记日当天21，再后面一天22，每股现金分红（税后）0.2，投资者在股权登记日收盘时21块买入，第二个交易日（通常是除权除息日）22块卖出，除了享受1块资本利得之外还会在之后享受0.2块股利利得，因此这里把这0.2块算到除权除息日涨幅中去（除权参考价通常是除权除息日开盘调整价格，因此实际当天涨幅是从20.8涨到22）
-
-
-
-鉴于50只股票都是沪市，以下是沪市除权参考价：除权参考价＝（股权登记日收盘价＋配股价×配股率－派息率）／（1＋送股率＋配股率）​。也就是说还可以考虑配股这些。
-
-
-
-这是50只股票这段期间年均股利分配率表：
-
-表中可看出有的股票股利分配率并不低，因此收益率调整是会一定程度上影响权重计算结果的。
-
-| 股票代码 | 平均股利分配率 |
-| -------- | -------------- |
-| 601808   | 1.075009       |
-| 601958   | 0.761938       |
-| 601168   | 0.595065       |
-| 601008   | 0.519443       |
-| 601088   | 0.510221       |
-| 601006   | 0.500554       |
-| 601788   | 0.494759       |
-| 601333   | 0.49129        |
-| 601601   | 0.449052       |
-| 601991   | 0.435745       |
-| 601857   | 0.427784       |
-| 601139   | 0.402596       |
-| 601628   | 0.348128       |
-| 601003   | 0.346682       |
-| 601007   | 0.334938       |
-| 600999   | 0.332883       |
-| 601939   | 0.325975       |
-| 601398   | 0.324837       |
-| 601002   | 0.318457       |
-| 601988   | 0.307918       |
-| 601766   | 0.302142       |
-| 601699   | 0.291686       |
-| 601588   | 0.285447       |
-| 601328   | 0.270985       |
-| 601888   | 0.26985        |
-| 601099   | 0.269549       |
-| 601872   | 0.264109       |
-| 601009   | 0.263424       |
-| 601107   | 0.257803       |
-| 601607   | 0.241043       |
-| 601918   | 0.229456       |
-| 601898   | 0.226818       |
-| 601169   | 0.222221       |
-| 601998   | 0.21088        |
-| 601166   | 0.210026       |
-| 601666   | 0.203728       |
-| 601618   | 0.197695       |
-| 601318   | 0.192771       |
-| 601989   | 0.191564       |
-| 601186   | 0.162805       |
-| 601727   | 0.162084       |
-| 601111   | 0.16188        |
-| 601390   | 0.155337       |
-| 601668   | 0.140338       |
-| 601866   | 0.081107       |
-| 601899   | 0.055446       |
-| 601001   | 0.049485       |
-| 601600   | 0.019886       |
-| 601919   | 0.016431       |
-| 601005   | 0              |
-
-
-
-还有就是更深一点：行为金融方面考虑，可能发放股利与公司管理者对未来公司现金流预期等因素有关。相关理论也层出不穷：信号传递理论、税差理论、“一鸟在手”理论、代理成本理论等等。
-
-
-
-对此，早期也有相当多有关研究
-
-相关参考文献：
-
-> 毛端懿. 沪市除息日股价变动的实证研究[J]. 数量经济技术经济研究, 2002.
->
-> 俞乔, 程滢. 我国公司红利政策与股市波动[J]. 经济研究, 2001(04):32-40.
->
-> 屈依娜, 陈汉文. 现金股利政策、内部控制与市场反应[J]. 金融研究, 2018, 000(005):191-206.
->
-> 严武, 潘如璐, 石劲. 中国上市公司股利公告效应实证研究:1993-2006[J]. 当代财经, 2009, 000(009):50-55.
 
