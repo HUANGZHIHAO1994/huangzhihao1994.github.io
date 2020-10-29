@@ -306,6 +306,10 @@ def compute_weight(self, x_matrix, total_days=252, method="Markowitz", starttime
 | 全部平均： | 20150105 | 20191230 | 0.000217        | 7.30E-05            | HS300     |
 
 
+来自2020-10-30更新，增加了按照20150105资产价格归一化之后的比较结果：
+
+![HS300与Markowitz投资组合比较：20150105--20191230](https://ftp.bmp.ovh/imgs/2020/10/86e58eb1beb64adf.png)
+
 
 ### 5.2 Monto Carlo方法
 
@@ -370,6 +374,10 @@ def compute_weight(self, x_matrix, total_days=252, method="Markowitz", starttime
 | 全部时间： | 20150105 | 20191230 | 0.000217        | -0.000186443        | HS300     |
 
 
+来自2020-10-30更新，增加了按照20150105资产价格归一化之后的比较结果：
+
+![HS300与MontoCarlo投资组合比较：20150105--20191230](https://ftp.bmp.ovh/imgs/2020/10/a3e8d67479addb65.png)
+
 
 ### 5.3 Monto Carlo alpha 0方法
 
@@ -401,6 +409,10 @@ def compute_weight(self, x_matrix, total_days=252, method="Markowitz", starttime
 |            | 20190701 | 20191230 | 0.000354        | -0.00181            | HS300     |
 | 全部时间： | 20150105 | 20191230 | 0.000217        | -0.01062            | HS300     |
 
+
+来自2020-10-30更新，增加了按照20150105资产价格归一化之后的比较结果：
+
+![HS300与MontoCarlo_alpha0投资组合比较：20150105--20191230](https://ftp.bmp.ovh/imgs/2020/10/76ac757ef3910e3d.png)
 
 
 
