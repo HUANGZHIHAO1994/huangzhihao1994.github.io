@@ -392,7 +392,7 @@ Longstaff-Schwartz(2001) 原文P117："We use only in-the-money paths since it a
 
 首先要深入理解 Longstaff-Schwartz 方法，该方法其实每一步都分为 out-of-money 和 in-the-money ，再通过对 in-the-money 细分，最终形成三部分：out-of-money、continue、exercise，其中后两部分是 in-the-money 部分的细分。
 
-**优化方法** ：还是利用 Tsitsiklis et al. (1999) 方法逐步向前推进的思路，具体地，每一步：把那些 out-of-money 的 以及 判断要 continue 的 sample path 的上一期现金流折现到当前步，其余判断要 exercise 的 sample path 自然地选择 $K-S_t$ 作为当期现金流，如此逐步向前迭代下去。
+**优化方法** ：还是利用 Tsitsiklis et al. (1999) 方法逐步向前推进的思路，具体地，每一步：把那些 out-of-money 的 以及 判断要 continue 的 sample path 的上一期现金流折现到当前步，其余判断要 exercise 的 sample path 自然地选择 //( K-S_t //) 作为当期现金流，如此逐步向前迭代下去。
 
 这么做的好处是：实质上每次计算只需用当前步和上一期的现金流数据，而动态规划需要用整个现金流矩阵，并且动态规划判断要 continue 时向后追述现金流以及判断要 exercise 时向后将现金流都设置为0都是十分耗时的。
 
