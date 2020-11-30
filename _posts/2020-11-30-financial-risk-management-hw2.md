@@ -12,7 +12,7 @@ toc: false
     <img src='https://ftp.bmp.ovh/imgs/2020/08/b77a8439ea51e080.jpg' height="50" width="50" >
 </div>
 
-[相关代码和结果]https://github.com/HUANGZHIHAO1994/Financial-risk-management.git
+[相关代码和结果](https://github.com/HUANGZHIHAO1994/Financial-risk-management/tree/main/fin_risk_hw2)
 
 # 一、涉及内容
 
@@ -73,9 +73,10 @@ pip install -r requirements.txt
 
 ## 1. 生成样本路径
 
-给定条件：$S(t_0)$=30，K=30，$r$=3%，$\sigma$=35%，T=1
+给定条件：\\(S(t_0)\\)=30，K=30，\\(r\\)=3%，\\(\sigma\\)=35%，T=1
 
 使用以下公式生成样本路径：
+
 $$
 S(t_{i+1})=S(t_{i})exp\{(r-\frac{\sigma^2}{2})(t_{i+1}-t_{i})+\sigma\sqrt{t_{i+1}-t_{i}}Z_{i+1}\} \quad i=0,1,\cdots, 251\\
 $$
@@ -96,7 +97,7 @@ Sample\ path_{252\times10000}=\left(\begin{matrix}
 $$
 
 
-本次作业中， $ \Delta t = t_{i+1}-t_{i}=\frac{1}{252} $  ，实现样本路径可通过生成 (252, 10000) 维的标准正态随机数，之后逐行计算 S(t) ，具体可见 `generate_samples` 方法：
+本次作业中， \\( \Delta t = t_{i+1}-t_{i}=\frac{1}{252} \\) ，实现样本路径可通过生成 (252, 10000) 维的标准正态随机数，之后逐行计算 S(t) ，具体可见 `generate_samples` 方法：
 
 ```python
 def generate_samples():
@@ -109,6 +110,7 @@ def generate_samples():
 ## 2. 亚式期权定价
 
 生成样本路径后，亚式期权可根据下式定价：
+
 $$
 \bar{S_i}=\frac{1}{252}\sum_{m=1}^{252}S(t_m)_i\\
 $$
@@ -129,6 +131,7 @@ def calculate(stock_matrix, d_st_d_sigma_matrix, standard_normal_matrix):
 ## 3. 置信区间计算
 
 按下式计算置信区间：
+
 $$
 c_i=e^{-rT}(\bar{S_i}-K)^+\\
 $$
@@ -156,9 +159,11 @@ def calculate(stock_matrix, d_st_d_sigma_matrix, standard_normal_matrix):
 ### 4.1 delta计算
 
 亚式期权 **delta** 计算在 **lecturenote6** 中已经给出公式，此处不再重复推导，公式如下：
+
 $$
 \alpha^{'}(S_0)=E[e^{-rT}\mathbb{1}_{\{ \bar{S} >K \}} \frac{\bar{S}}{S_0}] \approx \frac{1}{n}\sum_{i=1}^{n} e^{-rT}\mathbb{1}_{\{ \bar{S_i} >K \}}\frac{\bar{S_i}}{S_0}
 $$
+
 **delta** 计算相对简单，并不需要新增计算，详情可见 `calculate` 方法：
 
 ```python
@@ -174,6 +179,7 @@ def calculate(stock_matrix, d_st_d_sigma_matrix, standard_normal_matrix):
 ### 4.2 vega计算
 
 亚式期权 **vega** 计算与 **lecturenote6** 中 **delta** 计算推导相似，但要比 **delta** 复杂，具体推导如下：
+
 $$
 \alpha(\sigma)=E[e^{-rT}(\bar{S}-K)^+] = E[Y(\sigma)]
 $$
@@ -185,7 +191,9 @@ $$
 $$
 \frac{\mathrm{d}}{\mathrm{d} \sigma} \bar{S} = \frac{1}{m}\sum_{i=1}^{m} \frac{\mathrm{d}}{\mathrm{d} \sigma} S(t_{i})
 $$
-根据 **lecturenote6** 中  $ S(t_{i}) $ 计算 $ \frac{\mathrm{d}}{\mathrm{d} \sigma} S(t_{i}) $ 得：
+
+根据 **lecturenote6** 中  \\( S(t_{i}) \\) 计算 \\( \frac{\mathrm{d}}{\mathrm{d} \sigma} S(t_{i}) \\) 得：
+
 $$
 S(t_{i})=S(t_{0})exp\{(r-\frac{\sigma^2}{2})t_i+\sigma\sqrt{\Delta t}(Z_1+ \cdots +Z_i)\}
 $$
@@ -193,11 +201,14 @@ $$
 $$
 \frac{\mathrm{d}}{\mathrm{d} \sigma} S(t_{i})=S(t_{i})(- \sigma t_i + \sqrt{\Delta t}(Z_1+ \cdots +Z_i))
 $$
+
 综上得到 **vega** 计算式：
+
 $$
 \alpha^{'}(\sigma)= E[e^{-rT}\mathbb{1}_{\{ \bar{S} >K \}} \frac{1}{m}\sum_{i=1}^{m} S(t_{i})(- \sigma t_i + \sqrt{\Delta t}(Z_1+ \cdots +Z_i))]
 $$
-可以看到， **vega** 与 **delta** 计算差别主要在 $ \frac{\mathrm{d}}{\mathrm{d} \sigma} S(t_{i}) $ 上，此处采用在生成样本路径时一起计算 $ \frac{\mathrm{d}}{\mathrm{d} \sigma} S(t_{i}) $ 的方法，详情可见 `generate_samples` 方法中 `d_st_d_sigma_matrix` 和 `calculate` 方法：
+
+可以看到， **vega** 与 **delta** 计算差别主要在 \\( \frac{\mathrm{d}}{\mathrm{d} \sigma} S(t_{i}) \\) 上，此处采用在生成样本路径时一起计算 \\( \frac{\mathrm{d}}{\mathrm{d} \sigma} S(t_{i}) \\) 的方法，详情可见 `generate_samples` 方法中 `d_st_d_sigma_matrix` 和 `calculate` 方法：
 
 ```python
 d_st_d_sigma_matrix[i] = stock_matrix[i] * (-VOLATILITY * DELTA_T * (i + 1) + np.sqrt(DELTA_T) * sum_of_standard_normal_matrix[i])
@@ -212,6 +223,7 @@ def calculate(stock_matrix, d_st_d_sigma_matrix, standard_normal_matrix):
 ### 4.3 gamma计算
 
 亚式期权 **gamma** 计算使用了 **likelihood ratio method** ，是希腊字母计算中最复杂的，也是最容易出错的，此处使用符号与 **lecturenote6** 中一致，具体推导如下：
+
 $$
 \begin{align*}
 \alpha^{''}(\theta)  
@@ -224,11 +236,13 @@ $$
 #### 4.3.1 错误的做法
 
 ==值得注意的是==，必须从上式开始推导，<u>不能使用</u>如下方法推导：
+
 $$
 \alpha^{''}(\theta)  =\frac{\mathrm{d}}{\mathrm{d} \theta} \alpha^{’}(\theta) =  \frac{\partial }{\partial \theta} E[g(\vec{x}) \frac{\partial }{\partial \theta} log[f(\vec{x};\theta)] ]
 $$
 
 原因在于上式第二个等号不成立
+
 $$
 \frac{\partial }{\partial \theta} E[g(\vec{x}) \frac{\partial }{\partial \theta} log[f(\vec{x};\theta)] ] = E[g(\vec{x}) \frac{\partial }{\partial \theta} (\frac{\frac{\partial  f(\vec{x};\theta)}{\partial \theta}}{f(\vec{x};\theta)})] \neq E[g(\vec{x}) \frac{\frac{\partial ^{2} f(\vec{x};\theta)}{\partial \theta^{2}}}{f(\vec{x};\theta)}]
 $$
@@ -236,13 +250,15 @@ $$
 $$
 \frac{f^{''}(x)}{f(x)} \neq (\frac{f^{'}(x)}{f(x)})^{'}
 $$
-因此，求 gamma <u>不能通过</u>求得 delta 的结果：$ \frac{\partial log(g(S_1, \cdots, S_m))}{\partial S_0}=\frac{Z_1}{S_0 \sigma \sqrt{\Delta t}} $  基础上继续求导得到，如此做法在最终 gamma 结果中会少了 $Z_1^2$ 项。
+
+因此，求 gamma <u>不能通过</u>求得 delta 的结果：\\( \frac{\partial log(g(S_1, \cdots, S_m))}{\partial S_0}=\frac{Z_1}{S_0 \sigma \sqrt{\Delta t}} \\)  基础上继续求导得到，如此做法在最终 gamma 结果中会少了 \\(Z_1^2\\) 项。
 
 
 
 #### 4.3.2 正确的做法
 
-只能利用 $ \alpha^{''}(\theta)= E[g(\vec{x}) \frac{\frac{\partial ^{2} f(\vec{x};\theta)}{\partial \theta^{2}}}{f(\vec{x};\theta)}] $ 求 gamma，可利用中间结果  $ \frac{\partial log(g(S_1, \cdots, S_m))}{\partial S_0}=\frac{logS_1-logS_0-(r-\frac{\sigma^2}{2}) \Delta t}{S_0 \sigma^2 \Delta t} $ ，具体使用如下：
+只能利用 \\( \alpha^{''}(\theta)= E[g(\vec{x}) \frac{\frac{\partial ^{2} f(\vec{x};\theta)}{\partial \theta^{2}}}{f(\vec{x};\theta)}] \\) 求 gamma，可利用中间结果  \\( \frac{\partial log(g(S_1, \cdots, S_m))}{\partial S_0}=\frac{logS_1-logS_0-(r-\frac{\sigma^2}{2}) \Delta t}{S_0 \sigma^2 \Delta t} \\) ，具体使用如下：
+
 $$
 \frac{\partial g(S_1, \cdots, S_m)}{\partial S_0}=\frac{\partial log(g(S_1, \cdots, S_m))}{\partial S_0}g(S_1, \cdots, S_m)
 $$
@@ -256,11 +272,14 @@ $$
 &= \frac{Z_1^2-1-Z_1\sigma \sqrt{\Delta t}}{S_0^2 \sigma^2 \Delta t}g(S_1, \cdots, S_m)
 \end{align*}
 $$
+
 进而得到
+
 $$
 \alpha^{''}(\theta) = E[e^{-rT}(\bar{S}-K)^+\frac{Z_1^2-1-Z_1\sigma \sqrt{\Delta t}}{S_0^2 \sigma^2 \Delta t}]
 $$
-上述推导也可参考下面文献的 P1546-1547 (文章中分母 $S_0$ 还是少了个平方，但总体推导思路正确 )
+
+上述推导也可参考下面文献的 P1546-1547 (文章中分母 \\(S_0\\) 还是少了个平方，但总体推导思路正确 )
 
 > [1]马俊美,杨宇婷,顾桂定,徐承龙.随机波动率模型下基于精确模拟算法的期权计算理论[J].同济大学学报(自然科学版),2017,45(10):1539-1548.
 
@@ -310,6 +329,7 @@ pathwise_gamma = np.mean(np.exp(-RISK_FREE_RATE_OPTION * EXPIRES_ANNUALIZE) * np
 
 
 其实，洪教授 lecturenote5 中的 Longstaff-Schwartz 方法是Tsitsiklis et al. (1999)方法，通过多项式回归拟合Continue Value 之后，进而通过下式使用从后向前逐步递推方法获取期权价值（具体算法由于讲义中有不在此处详述）：
+
 $$
 \widetilde{V_{m-1,j}} = \max \{(K-S_{m-1,j})^+, C_{m-1}(S_{m-1,j}) \}
 $$
@@ -323,7 +343,7 @@ $$
 
 ### 2.2 缺点
 
-1. 容易高估期权价值。从上式也可以看到，如果 Continue Value 拟合值 $ C_{m-1}(S_{m-1,j}) $ 十分大（高估许多），是会影响到后续许多步的拟合值，也可能最终直接影响期权价值 $V_0$ 。那为什么说这个方法容易高估呢，因为拟合值 $ C_{m-1}(S_{m-1,j}) $ 十分小的时候会选取 $(K-S_{m-1,j})^+$ 作为下一次拟合依据，影响并不是那么大。
+1. 容易高估期权价值。从上式也可以看到，如果 Continue Value 拟合值 \\( C_{m-1}(S_{m-1,j}) \\) 十分大（高估许多），是会影响到后续许多步的拟合值，也可能最终直接影响期权价值 \\(V_0\\) 。那为什么说这个方法容易高估呢，因为拟合值 \\( C_{m-1}(S_{m-1,j}) \\) 十分小的时候会选取 $(K-S_{m-1,j})^+\\) 作为下一次拟合依据，影响并不是那么大。
 2. 由1，自然地，该方法对拟合精度要求高。
 3. 该方法与常规美式期权（二叉树计算）思路并不同，拟合出 Continue Value，不仅用作判断是否 exercise ，还可能用到下一次拟合和以及影响期权定价。
 
