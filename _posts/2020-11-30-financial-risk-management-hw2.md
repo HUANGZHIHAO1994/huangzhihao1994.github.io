@@ -420,7 +420,7 @@ def longstaff_schwartz_combine_tsitsiklis(stock_matrix):
 
 ### 5.1 说明以及结果展示
 
-其实 Longstaff-Schwartz 方法已有学者在github上实现：https://github.com/aminjellali/Longstaff-and-Schwartz.git
+其实 Longstaff-Schwartz 方法已有学者在github上实现：[https://github.com/aminjellali/Longstaff-and-Schwartz.git](https://github.com/aminjellali/Longstaff-and-Schwartz.git)
 
 该作者完全使用原文动态规划思路进行编程，我对他的程序稍作修改之后使不同程序能在结果上一致，进而进行性能比较：
 
